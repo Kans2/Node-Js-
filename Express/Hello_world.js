@@ -5,7 +5,7 @@ const port = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
-app.use('/Api/users',require('./Routes/Api/users'));
+app.use('/api/users',require('./routes/api/users'));
 
 
 app.listen(port,()=>{

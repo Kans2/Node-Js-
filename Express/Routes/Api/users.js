@@ -3,10 +3,10 @@ const router = express.Router();  //router use
 const uuid = require('uuid');
 
 
+
 //store the user info in variable
 
 let users = require('../../Users');
-const user = require('../../Users');
 
 
 //Get method
