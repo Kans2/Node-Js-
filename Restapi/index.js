@@ -1,16 +1,59 @@
 const express = require('express');
 const app = express();
-
-const port = 8050;
-
-
-
-app.use(express.json());
-app.use(express.urlencoded({extended:false}));
-app.use('/Api/Movies',require('./Routes/Api/Movie.js'));
+const movies = require('./Movies');
+const PORT = process.env.PORT || 3000;
 
 
 
-app.listen(port,()=>{
-    console.log("The server os running at locolhost:8050");
+app.use(express.json());  //middle ware
+//app.use(express.urlencoded({extended:false}));
+
+
+//GET
+app.get('/movies',(req,res)=>{
+  res.json(movies);
+})
+
+
+
+
+//specific id use panni get
+/*
+app.get('/movies/:id', (req, res) => {
+    const { id } = req.params;
+    const movie = movies.find(m => m.id === parseInt(id));
+
+    if (movie) {
+        res.json(movie);
+    } else {
+        res.status(404).json({ message: 'Movie not found' });
+    }
+}); */
+
+//POST
+app.post('/movies/:id',(req,res)=>{
+    
+   
+    const {id} = req.params;
+    const {name,year,runtime} = req.body;
+
+    res.json({
+        message:"new movie added and created succesfuly",
+        movie:{
+            id:id,
+            name:name,
+            year:year,
+            runtime:runtime
+        }
+    });
+})
+
+
+
+
+
+
+
+app.listen(PORT,()=>{
+    console.log("The server os running at locolhost:3000");
 })

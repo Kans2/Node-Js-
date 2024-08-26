@@ -4,8 +4,9 @@ const port = 3000;
 
 
 app.use(express.json());
-app.use(express.urlencoded({extended:false}));
-app.use('/api/users',require('./routes/api/users'));
+app.use(express.urlencoded({extended:false}));    //middleware
+
+app.use('/users',require('./routes/api/users'));
 
 
 app.listen(port,()=>{

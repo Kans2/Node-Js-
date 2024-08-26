@@ -2,15 +2,13 @@ const express = require('express');
 const router = express.Router();  //router use
 const uuid = require('uuid');
 
-
-
 //store the user info in variable
 
-let users = require('../../Users');
+const users = require('../../Users.js');
 
 
 //Get method
-router.get('/',(req,res)=>{
+router.get('/user',(req,res)=>{
     res.json(users);
 });
 
