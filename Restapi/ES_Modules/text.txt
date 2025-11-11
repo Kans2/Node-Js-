@@ -1,0 +1,5 @@
+Es modules in the ECMAScript standard for modules 
+it was introduced with Es2015
+Nodejs 14 and above support ES modules
+instead of module.exports , we use export keyword
+the export can be default or named

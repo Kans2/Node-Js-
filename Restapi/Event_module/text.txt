@@ -1,0 +1,15 @@
+event module allow us work with events in nodejs
+using the events module,we can dispatch our own custom events and respond to custom event in non blocking manner
+
+im hungry
+go to dominos
+ordring the pizza
+chef see the order in display and baking
+
+
+event - ordring the pizza
+baking - response to the event
+
+
+
+

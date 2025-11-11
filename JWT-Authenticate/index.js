@@ -12,9 +12,17 @@ app.get('/api',(req,res)=>{
 });
 
 app.post('/api/posts',verifytoken,(req,res)=>{
-    res.json({
-        message:"post created"
+    Jwt.verify(req.token ,"secretkey",(err,authData)=>{
+        if(err){
+            res.sendStatus(403);
+        }else {
+            res.json({
+                message:"post created",
+                authData ,
+            }); 
+        }
     })
+
 })
 
 app.post('/api/login',(req,res)=>{
@@ -34,14 +42,14 @@ app.post('/api/login',(req,res)=>{
 
 
 function verifytoken(req,res ,next){
-    const bearheader = req.headers["authorization"]
-    if(typeof bearheader !== 'undefined'){
-        const bearheader = bearheader.spilit{''}[1]
-        req.token = bearheader
+    const bearerHeader = req.headers["authorization"]
+    if(typeof bearerHeader !== 'undefined'){
+        const bearerToken = bearerHeader.split(" ")[1]; 
+        req.token = bearerToken 
         next();
 
     }else{
-        res.sendStatus(404)
+        res.sendStatus(403 )
     }
 }
 

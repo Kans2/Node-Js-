@@ -11,6 +11,7 @@ app.use(express.json());  //middle ware
 
 //GET
 app.get('/movies',(req,res)=>{
+  res.statusCode(200);
   res.json(movies);
 })
 
@@ -37,9 +38,11 @@ app.post('/movies/:id',(req,res)=>{
     const {id} = req.params;
     const {name,year,runtime} = req.body;
 
+    
+
     res.json({
         message:"new movie added and created succesfuly",
-        movie:{
+        movies:{
             id:id,
             name:name,
             year:year,

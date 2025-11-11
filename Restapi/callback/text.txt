@@ -1,0 +1,33 @@
+a function which is called in another function through parameter 
+two types
+1.syncronous callback - a callback which is executed immediatly is called a syncronous callback
+2.asyncronous callback - a callback that is often used to continue or resume code execution after an asynchronous operation has completed.
+
+it will delayy the function untill any event or trigrred
+
+uses : reading data from a file , fetching data from a network or api, handling a network request
+
+
+function callback(){
+    document.getElementById("demo").innerHTML = "Hello world";
+
+}
+
+document.getElementById("btn").addEventListner("click",callback);
+
+function processUser(name, callback) {
+  console.log(`1. Processing user: ${name}`);
+  // Execute the callback function
+  callback();
+}
+// Define the callback function
+function greetUser() {
+  console.log("2. Hello and welcome!");
+}
+// Call the main function, passing greetUser as the callback
+processUser("Alice", greetUser);
+// Output:
+// 1. Processing user: Alice
+// 2. Hello and welcome!
+
+
