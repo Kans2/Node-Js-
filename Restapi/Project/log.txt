@@ -1,0 +1,1 @@
+Windows_NT,win32,10.0.26200,11th Gen Intel(R) Core(TM) i3-1115G4 @ 3.00GHz,4,x64,169576.343,8493666304

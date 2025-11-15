@@ -1,0 +1,153 @@
+[
+  {
+    "taskId": "1",
+    "title": "Complete coding interview prep",
+    "description": "Practice LeetCode-style DSA problems for technical interview readiness.",
+    "priority": "High",
+    "status": "Pending",
+    "deadline": "2025-11-20",
+    "assignedTo": "user",
+    "tags": [
+      "DSA",
+      "Interview",
+      "LeetCode"
+    ],
+    "createdDate": "2025-11-13"
+  },
+  {
+    "taskId": "2",
+    "title": "Study Japanese vocabulary",
+    "description": "Learn JLPT N4 vocabulary from Minnano Nihongo textbook.",
+    "priority": "Medium",
+    "status": "In Progress",
+    "deadline": "2025-11-25",
+    "assignedTo": "user",
+    "tags": [
+      "JLPT",
+      "Japanese",
+      "Vocabulary"
+    ],
+    "createdDate": "2025-11-14"
+  },
+  {
+    "taskId": "3",
+    "title": "Research new 5G smartphones",
+    "description": "Compare models with AMOLED display and at least 8GB RAM, 256GB storage under INR 16,000.",
+    "priority": "Low",
+    "status": "Pending",
+    "deadline": "2025-11-30",
+    "assignedTo": "user",
+    "tags": [
+      "Smartphone",
+      "Specs",
+      "Research"
+    ],
+    "createdDate": "2025-11-14"
+  },
+  {
+    "taskId": "4",
+    "title": "Revise English grammar",
+    "description": "Practice English prepositions and review rules in grammar textbook.",
+    "priority": "Medium",
+    "status": "Pending",
+    "deadline": "2025-11-21",
+    "assignedTo": "user",
+    "tags": [
+      "English",
+      "Grammar",
+      "Prepositions"
+    ],
+    "createdDate": "2025-11-14"
+  },
+  {
+    "taskId": "5",
+    "title": "Review automation testing tools",
+    "description": "Study Selenium and IBM testing tools for software-testing interview preparation.",
+    "priority": "High",
+    "status": "In Progress",
+    "deadline": "2025-11-18",
+    "assignedTo": "user",
+    "tags": [
+      "Testing",
+      "Selenium",
+      "IBM"
+    ],
+    "createdDate": "2025-11-14"
+  },
+  {
+    "taskId": "6",
+    "title": "Build MERN stack sample app",
+    "description": "Develop and deploy a basic CRUD web app using MongoDB, Express, React, and Node.js.",
+    "priority": "High",
+    "status": "Pending",
+    "deadline": "2025-11-23",
+    "assignedTo": "user",
+    "tags": [
+      "WebDev",
+      "MERN",
+      "CRUD"
+    ],
+    "createdDate": "2025-11-14"
+  },
+  {
+    "taskId": "7",
+    "title": "Deep learning review",
+    "description": "Study the concepts of CNNs, RNNs, Autoencoders, weights, and biases in neural networks.",
+    "priority": "Medium",
+    "status": "Pending",
+    "deadline": "2025-11-28",
+    "assignedTo": "user",
+    "tags": [
+      "DeepLearning",
+      "CNN",
+      "RNN",
+      "Autoencoder"
+    ],
+    "createdDate": "2025-11-14"
+  },
+  {
+    "taskId": "8",
+    "title": "Practice number theory problems",
+    "description": "Solve problems related to primes, factorials, and even/odd checks.",
+    "priority": "Medium",
+    "status": "Pending",
+    "deadline": "2025-11-19",
+    "assignedTo": "user",
+    "tags": [
+      "Math",
+      "NumberTheory",
+      "Practice"
+    ],
+    "createdDate": "2025-11-14"
+  },
+  {
+    "taskId": "9",
+    "title": "Update coding portfolio",
+    "description": "Add recent projects and optimize portfolio website for technical interviews.",
+    "priority": "Medium",
+    "status": "Pending",
+    "deadline": "2025-11-27",
+    "assignedTo": "user",
+    "tags": [
+      "Portfolio",
+      "WebDev",
+      "Interview"
+    ],
+    "createdDate": "2025-11-14"
+  },
+  {
+    "taskId": "10",
+    "title": "Plan mock interview schedule",
+    "description": "Organize upcoming sessions with friends or mentors to practice interview skills.",
+    "priority": "High",
+    "status": "Pending",
+    "deadline": "2025-11-22",
+    "assignedTo": "user",
+    "tags": [
+      "Interview",
+      "Preparation",
+      "Schedule"
+    ],
+    "createdDate": "2025-11-14"
+  }
+]
