@@ -1,0 +1,13 @@
+stept client will send login request to the server
+
+server check email,password if crt -- generate token and send like authorization token , access token - contain string
+
+token encrypt , generate jwt sign  and send to client , then client will send the token to server then server will recive the token from header and check authorize user if ok proceed to login 
+
+app.use(express.urlencoded({extended : true})); //for encoded data use break agama
+
+jwt generate - ena data , encrypt key jwt.sign({userId: id}, secretkey)
+
+jwt.verify() - token ,"secretkey",callback(err,decodedata)=>{
+    
+}

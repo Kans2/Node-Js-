@@ -1,9 +1,67 @@
 const tasks = require("../model/task.model");
+const register = require("../model/user.model");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const register = async(req,res)=>{
+      const { name , email , password } = req.body;
+      try{
+       if(!name || !email || !password){
+        return res.status(400).json({message:"Fields are required"});
+       }
 
+       const findUser =await register.findOne({email});
+
+       if(findUser){
+        return res.status(201).json({message:"user is already exits"});
+       }
+
+       const salt =await bcrypt.genSalt(10);
+       const hash = await bcrypt.hash(password,salt);
+
+       const user = new register({
+        name ,
+        email,
+        password:hash
+       })
+
+       await user.save();
+       return res.status(200).json({message:"user created"})
+      }catch(err){
+       console.log(err);
+       res.status(500).json({message :"Internal err",err});
+      }
+}
+
+const login = async (req,res)=>{
+    const { email , password } = req.body;
+    try{
+      const findUser = await register.findOne({email});
+      
+      if(!findUser){
+        return res.status(404).json({message:"Invalid username or password"});
+      }
+
+      const isMatch = bcrypt.compare(password,findUser.password);
+
+      if(!isMatch){
+        return res.status(404).json({message:"Invalid username or password"});
+      }
+
+      
+      const token = jwt.sign({userId:findUser._id}, process.env.JWT_SECRET);
+      
+      res.status(200).json({token : token , process.env.JWT_SECRET});
+
+    }catch(err){
+     console.log(err);
+     res.status(500).json({message:"Something went wrong try again"});
+    }
+}
 
 const getTasks = async (req,res) =>{
     try{
-         const fetchTasks = await tasks.find();
+
+         const fetchTasks = await tasks.findOne({req.USERID});
 
          if(fetchTasks.length == 0){
              
@@ -17,27 +75,29 @@ const getTasks = async (req,res) =>{
          }
     }
 
-    const postTask = async (req,res) =>{
-    
-         const { taskId, title, description, priority, status, deadline, assignedTo, tags, createdDate } = req.body;
+const postTask = async (req,res) =>{
+         
+        //  const { taskId, title, description, priority, status, deadline, assignedTo, tags, createdDate } = req.body;
       
-         const newTask = new tasks{
-
-         }
+         const newTask = new tasks({
+          ...req.body ,
+           user:req.USERID
+         });
 
          await newTask.save();
 
          res.status(200).json({message:"task created successfully",newTask});
-    }
+}
 
 const updateTask = async(req,res) =>{
       const { id} = req.params;
       const updatedData = req.body;
     try{
 
-        const findTask = await findbyIdAndUpdate(
-            id,
+        const findTask = await findOneAndUpdate(
+            {id, req.USERiD},
             updatedData,
+
             { new: true, runValidators: true }
         )
 
@@ -150,4 +210,4 @@ const gettaskforFirstpage = async(req,res)=>{
 }
 
 
-module.exports = {getTasks,postTask , updateTask};
+module.exports = {register,login,getTasks,postTask , updateTask ,deleteTask,gettaskbyQuery,sortTasks,sortTasksdefault,gettaskforFirstpage};

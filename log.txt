@@ -1,0 +1,239 @@
+Database:
+
+create Database
+use mydb    //create newdb or switch to existing Database
+
+create Collection
+db.createCollection("collection name - users");
+
+insert data into a collection
+db.users.insertOne({ name :"gangstar",});
+db.users.insertMany({ name :""},{ });
+
+
+CRUD OPERATIONS
+create
+db.users.insertOne({});
+read
+db.users.find();
+update
+db.users.updateOne({select},{$set : { updated fields}}); //updateOne({name:"raja", {$set {age : 30}}})
+delecte
+db.users.deleteOne({value});
+
+
+BASIC QUERYING
+db.users.find({age : {$gte: 20}});
+
+CREATE INDEX
+db.users.createIndex({name : 1});
+
+
+IMPORTING AND EXPORTING
+mongoimport --db dbname --collection collectioname --file filename| file.json| 
+mongoexport --db dbname --collection collectioname --file filename| data.json
+
+
+AGGGREGATE
+db.orders.aggregate([
+     {$match : {status :"A"}},   // Stage 1: Filter documents by status
+     {$group : {_id:"$cust_id" , total : { $sum : "$amount"}}},
+     {$sort{total : -1}}
+])
+
+total salses
+db.sales.agggregate([
+    {$match : {status:"completed"}},
+    {$group : {product:"$product_id"}, { total :{ $sum :"$amount"}}},
+    {$sort{ total : 1}}
+]);
+
+
+
+TTLINDEX
+db.sessions.createIndex({ "createdAt": 1 },
+{expireAfterSeconds: 3600});
+
+
+QUERIES SEARCH Text
+db.collection.createIndex({ content: "text" });
+db.collection.find({ $text: { $search: "mongodb" } });
+db.collection.find({$text:{ $search :"mongodb"}});
+
+
+ Find all Employees Who Work in the "Engineering" Department.
+ db.collection.find({department:"Engineering"});
+
+ 
+Find the Employee with the Highest Salary.
+ db.collection.sort({sal : -1}).limit(1);
+
+ 
+46. Update the Salary of "John Doe" to 90000.
+db.collection.updateOne({name:"JhonDoe"}, {$set:{sal : 90000}});
+
+
+count the number of employess in the each department
+db.collection.aggregate([
+    { $group:{ _id: "depaartment"}, { $count : "$sum"} }
+]);
+
+
+
+48.Add a New Field Bonus to All Employees in the "Engineering" Department with a Value of 5000.    
+db.collection.updateMany({department :"engineering" },${set:{bonus :5000}}
+
+
+
+49.
+//to find length of string in field like name
+db.collection.agreegate([{$addFields:{nameLength:{$strLenCP:"$name"}},
+{$sort:{nameLength : - 1},
+{$project :{nameLength:0}}
+])
+
+
+
+50. Find the Average Salary of Employees in the "Engineering" Department.
+db.collection.aggregate([
+     {$match : { department :"engineering"}}, $group {_id:null , averageSalary :{ $avgs : sal}},
+     {$sort: -1}
+]);
+
+
+ Find the Department with the Highest Average Salary.
+ db.collection.aggregate([
+    {$group:{$id:"department"} , avgsalary :{ $avg: sal}},
+    {$sort :{ sal : -1}},
+    {$limit: 1}
+ ]);
+
+
+52. Find the Total Number of Employees Hired in Each Year.
+Query:
+
+db.employees.aggregate([
+    { $group: { _id: { $year: "$hire_date" }, totalHired: { $sum: 1 } } }
+])
+
+
+53. Find the Highest and Lowest Salary in the "Engineering" Department.
+Query:
+db.employees.aggregate([
+    { $match: { department: "Engineering" } },
+    {
+        $group: {
+            _id: null,
+            highestSalary: { $max: "$salary" },
+            lowestSalary: { $min: "$salary" }
+        }
+    }
+])
+
+
+Problem 4: MongoDB Aggregation
+
+Given a orders collection:
+
+product, price, quantity, userId, createdAt
+
+
+Task:
+
+Find top 5 users with highest purchase amount
+
+Sort by total amount
+
+db.orders.agrregate([
+    {$group : { id : $userid} ,{ highestamount :{$sum : price}}},
+    { $sort: -1 },
+    { $limit : 5 }
+]);
+
+db.orders.aggregate([
+  {
+    // 1. Group by userId and calculate the sum of the 'price' field.
+    $group: {
+      _id: "$userId", // Grouping key
+      totalPurchaseAmount: { $sum: "$price" } // Accumulator to sum the prices
+    }
+  },
+  {
+    // 2. Sort the results in descending order (-1) based on the totalPurchaseAmount.
+    $sort: {
+      totalPurchaseAmount: -1
+    }
+  },
+  {
+    // 3. Limit the output to the top 5 documents.
+    $limit: 5
+  }
+])
+
+
+
+ try {
+        const pipeline = [
+            {
+                // Stage 1: Group orders by userId and calculate the sum of all prices.
+                $group: {
+                    _id: "$userId", // The grouping key is the user ID
+                    totalPurchaseAmount: { $sum: "$price" } // Sum all 'price' fields
+                }
+            },
+            {
+                // Stage 2: Sort the results in descending order (-1) based on the total amount.
+                $sort: {
+                    totalPurchaseAmount: -1
+                }
+            },
+            {
+                // Stage 3: Limit the output to the top 5 results.
+                $limit: 5
+            }
+        ];
+
+        const topUsers = await Order.aggregate(pipeline);
+
+        res.status(200).json({
+            message: "Successfully retrieved top 5 users by total purchase amount.",
+            data: topUsers
+        });
+
+    } catch (error) {
+        console.error('Aggregation error:', error);
+        res.status(500).json({ error: 'Failed to run aggregation pipeline.' });
+    }
+});
+
+// --- Data Seeder (for testing) ---
+async function seedData() {
+    const count = await Order.countDocuments();
+    if (count === 0) {
+        console.log('Seeding initial data...');
+        const mockOrders = [
+            // User A (High Spender)
+            { userId: 'userA', product: 'Laptop', price: 1200.00, createdAt: new Date() },
+            { userId: 'userA', product: 'Monitor', price: 300.00, createdAt: new Date() },
+            { userId: 'userA', product: 'Mouse', price: 50.00, createdAt: new Date() }, // Total: 1550
+            
+            // User B (Moderate Spender)
+            { userId: 'userB', product: 'Keyboard', price: 150.00, createdAt: new Date() },
+            { userId: 'userB', product: 'Desk Mat', price: 25.00, createdAt: new Date() },
+            { userId: 'userB', product: 'Webcam', price: 75.00, createdAt: new Date() }, // Total: 250
+            
+            // User C (Highest Spender)
+            { userId: 'userC', product: 'High-End PC', price: 3500.00, createdAt: new Date() }, // Total: 3500
+            
+            // User D (Second Highest Spender)
+            { userId: 'userD', product: 'Tablet', price: 1500.00, createdAt: new Date() }, // Total: 1500
+            
+            // User E (Moderate Spender)
+            { userId: 'userE', product: 'Headphones', price: 200.00, createdAt: new Date() }, // Total: 200
+
+            // User F (Lowest Spender - will be excluded by $limit)
+            { userId: 'userF', product: 'Cable', price: 15.00, createdAt: new Date() }, // Total: 15
+        ];
+        await Order.insertMany(mockOrders);
+        console.log('Seeding complete. 6 users created.');
+    }
